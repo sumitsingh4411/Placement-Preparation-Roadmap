@@ -1,0 +1,115 @@
+name: "🎤 Interview Experience"
+description: "Share your interview experience — the most valuable contribution to this repo"
+title: "[Interview] Company – Role – Year"
+labels: ["interview-experience", "high-value"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Thank you.** Interview experiences from tier-3 students are the single most useful thing in this repo.
+
+        You can be completely anonymous — say "a tier-3 college in UP" instead of naming your college.
+        **Rejections are just as valuable as selections.** Please share either.
+
+  - type: input
+    id: company
+    attributes:
+      label: Company
+      placeholder: "e.g. Zoho"
+    validations:
+      required: true
+
+  - type: input
+    id: role
+    attributes:
+      label: Role
+      placeholder: "e.g. SDE-1 / QA Engineer / Full Stack Intern"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: channel
+    attributes:
+      label: How did you apply?
+      options:
+        - On-campus
+        - Off-campus (career page)
+        - Referral
+        - Job portal (LinkedIn / Naukri / Instahyre)
+        - Hiring challenge (Unstop / HackerEarth)
+        - Cold email
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: background
+    attributes:
+      label: Your background at the time
+      description: "This is what makes the experience useful — it tells readers what level actually clears the bar."
+      placeholder: |
+        - Year: Final year B.Tech CSE
+        - College tier: Tier-3, private, [state]
+        - CGPA: 7.4
+        - DSA problems solved: ~350
+        - Projects: 2 deployed full-stack apps
+        - Internship: 2-month remote internship at a startup
+    validations:
+      required: true
+
+  - type: textarea
+    id: rounds
+    attributes:
+      label: The rounds
+      description: "Every round in order, with the actual questions asked."
+      placeholder: |
+        **Round 1 — Online Assessment (90 min, HackerRank)**
+        - 2 coding questions: (1) sliding window max, (2) DP on grids
+        - 20 MCQs on OS/DBMS output prediction
+        - Cleared: yes
+
+        **Round 2 — Technical (60 min)**
+        - Q: Reverse a linked list in K-groups. Asked for iterative after recursive.
+        - Q: Explain your e-commerce project's caching strategy.
+        - Q: Difference between clustered and non-clustered index?
+        - Went well overall, struggled on the follow-up about cache invalidation.
+
+        **Round 3 — ...**
+    validations:
+      required: true
+
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: Outcome
+      options:
+        - Selected
+        - Rejected
+        - Waiting / no response
+        - Withdrew
+    validations:
+      required: true
+
+  - type: input
+    id: ctc
+    attributes:
+      label: CTC offered (if selected)
+      placeholder: "e.g. ₹8 LPA (₹6.5 fixed + ₹1.5 variable)"
+
+  - type: textarea
+    id: lessons
+    attributes:
+      label: What you'd do differently
+      description: "The most useful part for readers."
+      placeholder: |
+        - I underestimated the CS fundamentals round — spent all my time on DSA
+        - Should have practised explaining my project out loud; I rambled
+        - Should have applied 3 months earlier
+    validations:
+      required: true
+
+  - type: textarea
+    id: advice
+    attributes:
+      label: Advice for someone targeting this company
+      placeholder: "e.g. Zoho's rounds are long — 5+ over one day. Practise endurance, not just problems."

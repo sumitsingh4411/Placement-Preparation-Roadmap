@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 📖 Read START-HERE first
+    url: https://github.com/YOUR_USERNAME/tier3-to-top-tech/blob/main/START-HERE.md
+    about: The 10-minute orientation. Most questions are answered here.
+  - name: 💬 r/developersIndia
+    url: https://www.reddit.com/r/developersIndia/
+    about: Broader career discussion, resume reviews and salary data from Indian developers.

@@ -1,0 +1,42 @@
+# ── OS ────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+desktop.ini
+
+# ── Editors ───────────────────────────────────────────
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Secrets (never commit these) ──────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+credentials.json
+
+# ── Dependencies / build (if you add tooling later) ───
+node_modules/
+dist/
+build/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# ── Agent / tooling caches ────────────────────────────
+.agent-cache/
+
+# ── Personal tracker files (fork-local) ───────────────
+my-tracker.md
+my-*.md

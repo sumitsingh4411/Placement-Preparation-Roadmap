@@ -1,0 +1,53 @@
+name: "🐛 Correction / Broken Link"
+description: "Report outdated info, a broken link, or something factually wrong"
+title: "[Fix] "
+labels: ["correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Wrong information actively hurts students making real decisions. Thanks for flagging it.
+
+  - type: input
+    id: file
+    attributes:
+      label: Which file?
+      placeholder: "e.g. placements/company-tiers.md"
+    validations:
+      required: true
+
+  - type: input
+    id: section
+    attributes:
+      label: Which section or line?
+      placeholder: "e.g. the Level 2 companies table, Zoho row"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: What kind of problem?
+      options:
+        - Broken or dead link
+        - Outdated information (CTC, hiring process changed)
+        - Factually incorrect
+        - Confusing / unclear
+        - Typo or formatting
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's wrong?
+    validations:
+      required: true
+
+  - type: textarea
+    id: correction
+    attributes:
+      label: What should it say instead?
+      description: "If you have a source, please include it."
+    validations:
+      required: true

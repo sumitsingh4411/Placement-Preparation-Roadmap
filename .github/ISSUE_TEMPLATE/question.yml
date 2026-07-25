@@ -1,0 +1,69 @@
+name: "❓ Question / Doubt"
+description: "Ask about roadmaps, tracks, companies, or anything in this repo"
+title: "[Question] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        No question is too basic here. Everyone starts somewhere.
+
+        **Before asking:** check if [START-HERE.md](../../blob/main/START-HERE.md), your year's roadmap, or the relevant track file already covers it.
+
+  - type: dropdown
+    id: year
+    attributes:
+      label: Which year are you in?
+      options:
+        - 1st year
+        - 2nd year
+        - 3rd year
+        - 4th year
+        - Already graduated
+        - Not a student
+    validations:
+      required: true
+
+  - type: dropdown
+    id: topic
+    attributes:
+      label: What's this about?
+      options:
+        - Choosing a track
+        - DSA preparation
+        - Projects
+        - Resume / GitHub / LinkedIn
+        - Applications / off-campus
+        - Interviews
+        - Specific company
+        - Started late — what do I do
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Your current situation
+      description: "The more context, the more useful the answer."
+      placeholder: |
+        - Year: 3rd year
+        - Track: Full stack (React + Node)
+        - DSA solved: ~120
+        - Projects: 1 deployed
+        - CGPA: 7.2
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+    validations:
+      required: true
+
+  - type: textarea
+    id: tried
+    attributes:
+      label: What have you already tried or read?
+      placeholder: "e.g. I read tracks/README.md but I'm still torn between backend and QA"
