@@ -781,11 +781,21 @@ def shell(*, page, title, description, body, toc, landing=False):
 
     # Direct links in the header. `match` is the path prefix that lights the link
     # up, so a reader always knows which part of the site they're standing in.
+    ICONS = {
+        "Start":     "M13 2 4 14h6l-1 8 9-12h-6z",
+        "Full map":  "M9 4 3 6v14l6-2 6 2 6-2V4l-6 2zM9 4v14M15 6v14",
+        "Roadmap":   "M4 19h4v-6H4zM10 19h4V9h-4zM16 19h4V5h-4z",
+        "Tracks":    "M4 7h16M4 12h16M4 17h9",
+        "Skills":    "M12 3 3 8l9 5 9-5zM3 14l9 5 9-5",
+        "Get hired": "M20 7H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2",
+        "Guides":    "M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2zM8 7h7M8 11h7",
+    }
     topnav = "".join(
-        '<a href="%s"%s>%s</a>' % (rel(page, target),
-                                   ' class="on"' if (page == target or
-                                                     (match and page.startswith(match))) else "",
-                                   html.escape(label))
+        '<a href="%s"%s><svg viewBox="0 0 24 24" aria-hidden="true">'
+        '<path d="%s"/></svg><span>%s</span></a>'
+        % (rel(page, target),
+           ' class="on"' if (page == target or (match and page.startswith(match))) else "",
+           ICONS[label], html.escape(label))
         for target, match, label in (
             ("START-HERE.html", None, "Start"),
             ("map.html", None, "Full map"),
