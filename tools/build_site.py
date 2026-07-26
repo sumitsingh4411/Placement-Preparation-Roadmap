@@ -283,6 +283,30 @@ RAW_HTML_RE = re.compile(r"^\s*</?(div|details|summary|br|img|p|span|kbd|sup|sub
 
 # ─────────────────────────────────────────────────────────── helpers ──
 
+# The markdown hardcodes colours picked for GitHub's dark theme. They clash
+# with this site's palette, so remap them on the way out: deep tinted fills
+# from our own ink range, strokes from our accent set. GitHub keeps its own.
+MERMAID_PALETTE = {
+    "#065f46": "#0E2A21", "#10b981": "#34D399",   # green
+    "#1e40af": "#121F3E", "#3b82f6": "#60A5FA",   # blue
+    "#6d28d9": "#1E1739", "#a78bfa": "#A78BFA",   # violet
+    "#4c1d95": "#1E1739",
+    "#9f1239": "#2B121E", "#fb7185": "#FB7185",   # rose
+    "#a16207": "#2C2109", "#facc15": "#F5B942",   # gold
+    "#78350f": "#2C2109", "#f59e0b": "#F5B942",
+    "#7f1d1d": "#2E1410", "#ef4444": "#FF6B3D",   # flame
+    "#334155": "#1B2542", "#94a3b8": "#7C8AAF",   # neutral
+    "#0e7490": "#0B2932", "#22d3ee": "#22D3EE",   # cyan
+}
+
+
+def retheme_mermaid(src):
+    """Swap GitHub-theme hexes for palette equivalents, case-insensitively."""
+    def sub(m):
+        return MERMAID_PALETTE.get(m.group(0).lower(), m.group(0))
+    return re.sub(r"#[0-9a-fA-F]{6}", sub, src)
+
+
 def slugify(text):
     text = re.sub(r"<[^>]+>", "", text)
     text = "".join(c for c in text if not unicodedata.category(c).startswith("So"))
@@ -422,7 +446,7 @@ def render(md, page_dir):
             code = "\n".join(body)
             if lang == "mermaid":
                 html_out.append('<div class="mermaid-wrap"><pre class="mermaid">%s</pre></div>'
-                                % html.escape(code))
+                                % html.escape(retheme_mermaid(code)))
             else:
                 html_out.append(
                     '<div class="code-block" data-lang="%s"><button class="copy" '

@@ -267,14 +267,22 @@
       "window.__t3mermaid=m;window.__t3RenderMermaid=function(reset){" +
       "var dark=document.documentElement.dataset.theme!=='light';" +
       "m.initialize({startOnLoad:false,theme:'base',fontFamily:'Instrument Sans,sans-serif'," +
-      "themeVariables:{background:'transparent',primaryColor:dark?'#1B2542':'#E1E8F7'," +
-      "primaryTextColor:dark?'#E9EDF8':'#131A2E',primaryBorderColor:dark?'#23304F':'#CFD9EE'," +
-      "lineColor:dark?'#7C8AAF':'#5D6B8E',secondaryColor:dark?'#141C34':'#EAEFFA'," +
-      "tertiaryColor:dark?'#0F1528':'#F2F5FC',fontSize:'14px'}});" +
+      "flowchart:{curve:'basis',nodeSpacing:44,rankSpacing:58,padding:14,useMaxWidth:true}," +
+      "themeVariables:{background:'transparent',primaryColor:dark?'#161F3A':'#E7EDFA'," +
+      "primaryTextColor:dark?'#E9EDF8':'#131A2E',primaryBorderColor:dark?'#2A3757':'#C6D2EC'," +
+      "lineColor:dark?'#55628A':'#8C9AC0',secondaryColor:dark?'#141C34':'#EAEFFA'," +
+      "tertiaryColor:dark?'#0F1528':'#F2F5FC',edgeLabelBackground:dark?'#0F1528':'#F2F5FC'," +
+      "fontSize:'14px'}});" +
       "var nodes=document.querySelectorAll('.mermaid');" +
       "if(reset){nodes.forEach(function(n,i){n.removeAttribute('data-processed');" +
       "n.textContent=window.__t3src[i];});}" +
-      "m.run({nodes:nodes});};window.__t3RenderMermaid(false);";
+      // Render immediately so the diagram is never blocked on the network,
+      // then render once more when the webfonts settle. Mermaid sizes its
+      // boxes by measuring label text, so a first pass with fallback metrics
+      // can come out too narrow; the second pass corrects it.
+      "m.run({nodes:nodes});};window.__t3RenderMermaid(false);" +
+      "if(document.fonts&&document.fonts.ready){document.fonts.ready" +
+      ".then(function(){window.__t3RenderMermaid(true);});}";
     window.__t3src = sources;
     document.body.appendChild(s);
   }

@@ -877,3 +877,82 @@ div[align="center"] p:has(img.badge) { line-height: 2.2; }
   .phase { grid-template-columns: 26px minmax(0, 1fr); }
   .leaf { flex: 1 1 100%; }
 }
+
+/* ── mermaid: premium pass ───────────────────────────────────────────────
+   Mermaid ships functional defaults, not designed ones. These rules give
+   the generated SVG the same language as the rest of the site: rounded
+   corners, real type, and edges that recede behind the nodes. */
+.mermaid-wrap {
+  position: relative;
+  padding: 30px 20px 26px;
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(120% 100% at 50% 0%, color-mix(in srgb, var(--ink-2) 85%, transparent), transparent 70%),
+    color-mix(in srgb, var(--ink-1) 70%, transparent);
+  border: 1px solid var(--haze-soft);
+}
+/* hairline of brand colour along the top edge — ties diagrams to the page */
+.mermaid-wrap::before {
+  content: ""; position: absolute; inset: 0 0 auto; height: 1px;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  background: linear-gradient(90deg, transparent, var(--flame), var(--gold), transparent);
+  opacity: .5;
+}
+.mermaid { min-height: 40px; }
+.mermaid svg { display: block; margin: 0 auto; }
+
+/* nodes */
+.mermaid .node rect,
+.mermaid .node polygon,
+.mermaid .node circle,
+.mermaid .node path {
+  rx: 10px; ry: 10px;
+  stroke-width: 1.5px;
+  filter: drop-shadow(0 3px 10px rgb(0 0 0 / .28));
+}
+:root[data-theme="light"] .mermaid .node rect,
+:root[data-theme="light"] .mermaid .node polygon,
+:root[data-theme="light"] .mermaid .node path {
+  filter: drop-shadow(0 2px 6px rgb(18 26 46 / .1));
+}
+.mermaid .nodeLabel, .mermaid .label {
+  font-family: var(--f-body) !important;
+  font-weight: 500; letter-spacing: -.006em;
+}
+
+/* edges sit behind the nodes, not competing with them */
+.mermaid .edgePath path, .mermaid .flowchart-link {
+  stroke-width: 1.6px; opacity: .75;
+}
+.mermaid .arrowheadPath, .mermaid marker path { opacity: .75; }
+.mermaid .edgeLabel {
+  font-family: var(--f-mono) !important;
+  font-size: 11.5px !important; letter-spacing: .03em;
+}
+.mermaid .edgeLabel rect, .mermaid .edgeLabel foreignObject div {
+  background: transparent !important; opacity: 1;
+}
+
+/* subgraphs read as grouping, not as another node */
+.mermaid .cluster rect {
+  rx: 14px; ry: 14px;
+  stroke-dasharray: 3 4; stroke-width: 1px;
+  fill: color-mix(in srgb, var(--ink) 45%, transparent) !important;
+}
+.mermaid .cluster .nodeLabel {
+  font-family: var(--f-mono) !important;
+  font-size: 11px !important; letter-spacing: .12em; text-transform: uppercase;
+  fill: var(--muted) !important;
+}
+
+/* gantt */
+.mermaid .grid .tick line { stroke: var(--haze-soft) !important; opacity: .6; }
+.mermaid .sectionTitle, .mermaid .titleText { font-family: var(--f-display) !important; font-weight: 700; }
+
+@media (max-width: 560px) { .mermaid-wrap { padding: 20px 12px; } }
+
+/* Safety net: if mermaid ever mis-measures a label, the diagram must still be
+   readable. SVG clips overflow by default, which is what turns a bad
+   measurement into text cut off mid-word. Let it paint outside instead. */
+.mermaid svg { overflow: visible; }
+.mermaid-wrap { overflow-x: auto; overflow-y: visible; }
