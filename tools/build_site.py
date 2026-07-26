@@ -306,35 +306,34 @@ os.makedirs(DIAGRAM_DIR, exist_ok=True)
 
 
 def render_diagram(src):
-    """Compile a mermaid block to a static SVG at build time.
+    """Compile a mermaid block to a PNG at build time.
 
-    Rendering in the browser meant every diagram depended on the webfont
-    arriving, a CDN being reachable, and foreignObject measuring correctly -
-    and any of those failing sliced or blanked the diagram. Compiling here
-    removes all of it: the SVG is a file we can open and check.
+    Every diagram bug in this repo came from text being laid out in one
+    place and rendered in another: foreignObject clipping, a webfont
+    arriving late, the build machine and the browser disagreeing about
+    which font to measure. A raster image has no text to re-lay-out, so
+    what is verified at build time is exactly what the reader sees. It
+    cannot overlap, clip, reflow or flicker.
 
+    Rendered at 3x for retina and displayed at its natural width.
     Cached by content hash, so only changed diagrams re-render.
     """
     import hashlib, subprocess, tempfile
     key = hashlib.md5(src.encode()).hexdigest()[:12]
-    out = os.path.join(DIAGRAM_DIR, key + ".svg")
-    if not os.path.exists(out):
+    png = os.path.join(DIAGRAM_DIR, key + ".png")
+    if not os.path.exists(png):
         mmdc = os.path.join(ROOT, "node_modules", ".bin", "mmdc")
         with tempfile.NamedTemporaryFile("w", suffix=".mmd", delete=False) as fh:
             fh.write(src)
             tmp = fh.name
-        subprocess.run([mmdc, "-i", tmp, "-o", out, "-c", MERMAID_CONF,
-                        "-b", "transparent"], check=True,
+        subprocess.run([mmdc, "-i", tmp, "-o", png, "-c", MERMAID_CONF,
+                        "-b", "transparent", "-s", "3"], check=True,
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         os.unlink(tmp)
-    svg = open(out, encoding="utf-8").read()
-    svg = svg[svg.index("<svg"):]
-    # Keep mermaid's own max-width: it is the diagram's natural size. Removing
-    # it makes every SVG stretch to the full column and small diagrams blow up
-    # until their nodes overlap. Only add height:auto so it scales in ratio.
-    svg = re.sub(r'style="max-width:\s*([0-9.]+)px;?[^"]*"',
-                 r'style="max-width:\1px;width:100%;height:auto"', svg, count=1)
-    return svg
+    import struct
+    with open(png, "rb") as fh:
+        w, h = struct.unpack(">II", fh.read(24)[16:24])
+    return (png, w // 3, h // 3)
 
 
 def retheme_mermaid(src):
@@ -492,8 +491,13 @@ def render(md, page_dir):
             i += 1
             code = "\n".join(body)
             if lang == "mermaid":
-                html_out.append('<figure class="mermaid-wrap">%s</figure>'
-                                % render_diagram(retheme_mermaid(code)))
+                path, w, h = render_diagram(retheme_mermaid(code))
+                html_out.append(
+                    '<figure class="mermaid-wrap"><img src="%sassets/diagrams/%s" '
+                    'width="%d" height="%d" alt="Diagram" loading="lazy" '
+                    'decoding="async"></figure>'
+                    % ("../" * (page_dir.count("/") + 1) if page_dir else "",
+                       os.path.basename(path), w, h))
             else:
                 html_out.append(
                     '<div class="code-block" data-lang="%s"><button class="copy" '
@@ -988,6 +992,8 @@ def main():
     with open(os.path.join(OUT, "robots.txt"), "w", encoding="utf-8") as f:
         f.write(f"User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n")
 
+    shutil.copytree(DIAGRAM_DIR, os.path.join(OUT, "assets", "diagrams"),
+                    dirs_exist_ok=True)
     print(f"Built {built} pages -> docs/")
     print(f"sitemap.xml: {len(urls)} URLs")
     print(f"Search index: {len(index)} documents")

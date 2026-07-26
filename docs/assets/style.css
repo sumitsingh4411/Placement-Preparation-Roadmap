@@ -950,16 +950,14 @@ div[align="center"] p:has(img.badge) { line-height: 2.2; }
 
 @media (max-width: 560px) { .mermaid-wrap { padding: 20px 12px; } }
 
-/* Static SVG compiled at build time.
+/* Diagrams are images rendered at build time.
 
-   Nothing here restyles the diagram: mmdc measured every label and sized
-   every box during the build, so changing font, weight or size afterwards
-   makes text stop fitting its box and nodes overlap.
-
-   No overflow either. The SVG is capped at 100% so it always fits, which
-   means no scrollbar can appear - and no scrollbar means it cannot appear,
-   narrow the content, become unnecessary and disappear in a loop, which is
-   what read as fast flickering on hover. */
-.mermaid-wrap { padding: 26px 20px; margin: 1.6em 0; text-align: center; }
-.mermaid-wrap svg { display: inline-block; max-width: 100%; height: auto; }
-@media (max-width: 560px) { .mermaid-wrap { padding: 16px 10px; } }
+   Every diagram bug here came from text being laid out in one place and
+   rendered in another - foreignObject clipping, a webfont arriving late,
+   the build machine and the browser disagreeing on which font to measure.
+   An image has no text to re-lay-out, so it cannot overlap, clip, reflow
+   or flicker. width/height are on the tag, so it reserves its space before
+   loading and nothing shifts. */
+.mermaid-wrap { margin: 1.6em 0; padding: 22px 18px; text-align: center; }
+.mermaid-wrap img { max-width: 100%; height: auto; display: inline-block; }
+@media (max-width: 560px) { .mermaid-wrap { padding: 14px 8px; } }
