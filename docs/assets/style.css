@@ -1156,3 +1156,18 @@ div[align="center"] p:has(img.badge) { line-height: 2.2; }
   border-color: color-mix(in srgb, var(--flame) 34%, transparent);
 }
 @media (max-width: 1320px) { .topnav a span { display: none; } .topnav a { padding: 8px 10px; } }
+
+/* Every item carries its own border by default, so the nav reads as a row of
+   distinct controls rather than one strip that only reveals itself on hover. */
+.topnav a {
+  border-color: color-mix(in srgb, var(--flame) 20%, transparent);
+  background: color-mix(in srgb, var(--ink-2) 55%, transparent);
+}
+.topnav a:hover {
+  border-color: color-mix(in srgb, var(--flame) 48%, transparent);
+  background: color-mix(in srgb, var(--flame) 13%, transparent);
+}
+:root[data-theme="light"] .topnav a {
+  border-color: color-mix(in srgb, var(--flame) 26%, transparent);
+  background: color-mix(in srgb, var(--paper) 70%, transparent);
+}
