@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://YOUR_USERNAME.github.io/placement-preparation-roadmap/sitemap.xml
+Sitemap: https://sumitsingh4411.github.io/Placement-Preparation-Roadmap/sitemap.xml

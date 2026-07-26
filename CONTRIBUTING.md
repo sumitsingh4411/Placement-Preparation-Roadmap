@@ -74,8 +74,8 @@ Use GitHub's web editor — click the ✏️ pencil icon on any file, make the c
 
 ```bash
 # 1. Fork the repo on GitHub, then:
-git clone https://github.com/YOUR_USERNAME/tier3-to-top-tech.git
-cd tier3-to-top-tech
+git clone https://github.com/sumitsingh4411/Placement-Preparation-Roadmap.git
+cd Placement-Preparation-Roadmap
 
 # 2. Create a branch
 git switch -c add-zoho-interview-experience

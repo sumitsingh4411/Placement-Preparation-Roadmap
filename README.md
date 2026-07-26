@@ -13,9 +13,9 @@
 ![Format](https://img.shields.io/badge/Format-Pure%20Markdown-2563eb?style=for-the-badge)
 ![Target](https://img.shields.io/badge/Target-Service%20%E2%86%92%20Product%20%E2%86%92%20FAANG-7c3aed?style=for-the-badge)
 
-![Stars](https://img.shields.io/github/stars/YOUR_USERNAME/tier3-to-top-tech?style=flat-square&color=eab308)
-![Forks](https://img.shields.io/github/forks/YOUR_USERNAME/tier3-to-top-tech?style=flat-square&color=06b6d4)
-![Last Commit](https://img.shields.io/github/last-commit/YOUR_USERNAME/tier3-to-top-tech?style=flat-square&color=ec4899)
+![Stars](https://img.shields.io/github/stars/sumitsingh4411/Placement-Preparation-Roadmap?style=flat-square&color=eab308)
+![Forks](https://img.shields.io/github/forks/sumitsingh4411/Placement-Preparation-Roadmap?style=flat-square&color=06b6d4)
+![Last Commit](https://img.shields.io/github/last-commit/sumitsingh4411/Placement-Preparation-Roadmap?style=flat-square&color=ec4899)
 ![License](https://img.shields.io/badge/license-MIT-64748b?style=flat-square)
 
 <br>
@@ -207,7 +207,7 @@ graph TD
 ## 🗂️ Repo structure
 
 ```
-tier3-to-top-tech/
+Placement-Preparation-Roadmap/
 │
 ├── START-HERE.md                  👈 read this first
 │

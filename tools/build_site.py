@@ -18,8 +18,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "docs")
 TOOLS = os.path.join(ROOT, "tools")
 
-GH_USER = "YOUR_USERNAME"
-REPO_NAME = "placement-preparation-roadmap"
+GH_USER = "sumitsingh4411"
+REPO_NAME = "Placement-Preparation-Roadmap"
 REPO_URL = f"https://github.com/{GH_USER}/{REPO_NAME}"
 SITE_URL = f"https://{GH_USER}.github.io/{REPO_NAME}"
 SITE_TITLE = "Tier-3 to Top Tech"
