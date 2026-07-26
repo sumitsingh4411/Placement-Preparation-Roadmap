@@ -307,6 +307,16 @@ def retheme_mermaid(src):
     return re.sub(r"#[0-9a-fA-F]{6}", sub, src)
 
 
+def asset_version(name):
+    """Content hash appended to asset URLs. Without this, GitHub Pages and the
+    browser happily serve a cached style.css/app.js for hours, which makes a
+    deployed fix look like it did nothing."""
+    import hashlib
+    path = os.path.join(TOOLS, "assets", name)
+    with open(path, "rb") as fh:
+        return hashlib.md5(fh.read()).hexdigest()[:8]
+
+
 def slugify(text):
     text = re.sub(r"<[^>]+>", "", text)
     text = "".join(c for c in text if not unicodedata.category(c).startswith("So"))
@@ -689,6 +699,8 @@ def shell(*, page, title, description, body, toc, landing=False):
     edit = ('<a class="edit-link" href="%s/blob/main/%s" target="_blank" rel="noopener">Edit on GitHub</a>'
             % (REPO_URL, src_md)) if src_md else ""
 
+    css_v = asset_version("style.css")
+    js_v = asset_version("app.js")
     canonical = canonical_for(page)
     og_type = "website" if landing else "article"
     jsonld = structured_data(page, title, description, src_md)
@@ -738,7 +750,7 @@ def shell(*, page, title, description, body, toc, landing=False):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{assets}assets/style.css">
+<link rel="stylesheet" href="{assets}assets/style.css?v={css_v}">
 <script>try{{var t=localStorage.getItem('t3-theme');if(t)document.documentElement.dataset.theme=t;}}catch(e){{}}</script>
 </head>
 <body class="{'is-landing' if landing else 'is-doc'}">
@@ -803,7 +815,7 @@ def shell(*, page, title, description, body, toc, landing=False):
 </footer>
 
 <script>window.T3_BASE="{assets}";</script>
-<script src="{assets}assets/app.js" defer></script>
+<script src="{assets}assets/app.js?v={js_v}" defer></script>
 </body>
 </html>"""
 

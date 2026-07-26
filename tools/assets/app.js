@@ -311,27 +311,26 @@
         n.textContent = window.__t3src[i];
       });
       window.mermaid.initialize(theme());
-      window.mermaid.run({
-        nodes: nodes,
-        postRenderCallback: function () {
-          document.querySelectorAll(".mermaid svg").forEach(function (svg) {
-            svg.removeAttribute("width");
-            svg.removeAttribute("height");
-            svg.style.width = "100%";
-            svg.style.height = "100%";
-            panners.push(window.svgPanZoom(svg, {
-              zoomEnabled: true,
-              controlIconsEnabled: true,
-              fit: true,
-              center: true,
-              minZoom: 0.4,
-              maxZoom: 12,
-              contain: false,
-              dblClickZoomEnabled: true,
-              mouseWheelZoomEnabled: false /* let the page keep its scroll */
-            }));
-          });
-        }
+      /* run() resolves once every diagram is in the DOM. Attaching there is
+         reliable; postRenderCallback is not. */
+      window.mermaid.run({ nodes: nodes }).then(function () {
+        document.querySelectorAll(".mermaid svg").forEach(function (svg) {
+          svg.removeAttribute("width");
+          svg.removeAttribute("height");
+          svg.style.width = "100%";
+          svg.style.height = "100%";
+          panners.push(window.svgPanZoom(svg, {
+            zoomEnabled: true,
+            controlIconsEnabled: true,
+            fit: true,
+            center: true,
+            minZoom: 0.4,
+            maxZoom: 12,
+            contain: false,
+            dblClickZoomEnabled: true,
+            mouseWheelZoomEnabled: false
+          }));
+        });
       });
     };
 
