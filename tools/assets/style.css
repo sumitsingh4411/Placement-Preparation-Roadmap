@@ -947,12 +947,22 @@ div[align="center"] p:has(img.badge) { line-height: 2.2; }
 
 /* gantt */
 .mermaid .grid .tick line { stroke: var(--haze-soft) !important; opacity: .6; }
-.mermaid .sectionTitle, .mermaid .titleText { font-family: var(--f-display) !important; font-weight: 700; }
 
 @media (max-width: 560px) { .mermaid-wrap { padding: 20px 12px; } }
 
-/* Static SVG compiled at build time - no runtime, no font race, no
-   foreignObject. Centred at its natural size, never stretched past it. */
-.mermaid-wrap { padding: 26px 20px; margin: 1.6em 0; overflow-x: auto; text-align: center; }
-.mermaid-wrap svg { display: inline-block; height: auto; }
+/* Static SVG compiled at build time.
+
+   Deliberately NOT restyling the text: mmdc measured every label and sized
+   every box during the build, so changing font-family or weight here makes
+   the text stop fitting the box it was laid out for, and nodes overlap.
+
+   scrollbar-gutter keeps space reserved so the scrollbar cannot appear,
+   narrow the content, become unnecessary, disappear, and loop - which reads
+   as fast flickering on hover. */
+.mermaid-wrap {
+  padding: 26px 20px; margin: 1.6em 0;
+  overflow-x: auto; scrollbar-gutter: stable;
+  text-align: center;
+}
+.mermaid-wrap svg { display: inline-block; height: auto; max-width: 100%; }
 @media (max-width: 560px) { .mermaid-wrap { padding: 16px 10px; } }
