@@ -1,11 +1,11 @@
 {
  "theme": "base",
- "fontFamily": "Arial, Helvetica, sans-serif",
+ "fontFamily": "Instrument Sans, Helvetica Neue, sans-serif",
  "flowchart": {
   "curve": "basis",
-  "nodeSpacing": 44,
-  "rankSpacing": 58,
-  "padding": 14,
+  "nodeSpacing": 50,
+  "rankSpacing": 64,
+  "padding": 18,
   "htmlLabels": false,
   "useMaxWidth": true
  },
@@ -19,7 +19,8 @@
   "secondaryColor": "#141C34",
   "tertiaryColor": "#0F1528",
   "edgeLabelBackground": "#0F1528",
-  "fontSize": "14px",
-  "fontFamily": "Arial, Helvetica, sans-serif"
- }
+  "fontSize": "15px",
+  "fontFamily": "Instrument Sans, Helvetica Neue, sans-serif"
+ },
+ "themeCSS": ".node rect,.node polygon,.node path{rx:14;ry:14;stroke-width:1.6px}.node .label text,.nodeLabel{letter-spacing:-0.005em}.edgePath path,.flowchart-link{stroke-width:1.7px;opacity:.8}.cluster rect{rx:18;ry:18;stroke-dasharray:3 5;stroke-width:1.2px}.marker{opacity:.8}"
 }
