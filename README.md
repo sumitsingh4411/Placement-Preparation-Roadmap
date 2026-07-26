@@ -1,30 +1,37 @@
 <div align="center">
 
+<br>
+
 # 🎓 Placement Preparation Roadmap
 
-### A complete 4-year guide for B.Tech & engineering students in India — built for tier-3 colleges
+### A complete 4-year guide for B.Tech &amp; engineering students in India — built for tier-3 colleges
 
-**Free, year-by-year placement preparation: DSA, career tracks, projects, aptitude, resume and off-campus strategy.** No campus placements? No seniors to guide you? No coding culture? Good. Start here.
-
-<br>
-
-![Made for Tier 3](https://img.shields.io/badge/Made%20for-Tier--3%20Students-0f172a?style=for-the-badge)
-![Cost](https://img.shields.io/badge/Cost-100%25%20Free-16a34a?style=for-the-badge)
-![Format](https://img.shields.io/badge/Format-Pure%20Markdown-2563eb?style=for-the-badge)
-![Target](https://img.shields.io/badge/Target-Service%20%E2%86%92%20Product%20%E2%86%92%20FAANG-7c3aed?style=for-the-badge)
-
-![Stars](https://img.shields.io/github/stars/sumitsingh4411/Placement-Preparation-Roadmap?style=flat-square&color=eab308)
-![Forks](https://img.shields.io/github/forks/sumitsingh4411/Placement-Preparation-Roadmap?style=flat-square&color=06b6d4)
-![Last Commit](https://img.shields.io/github/last-commit/sumitsingh4411/Placement-Preparation-Roadmap?style=flat-square&color=ec4899)
-![License](https://img.shields.io/badge/license-MIT-64748b?style=flat-square)
+**Free forever. No signup, no course, no ₹49,999 "placement guarantee".**
+Year-by-year plans · 8 career tracks · DSA · aptitude · resume · off-campus strategy
 
 <br>
 
-**[🚀 Start Here](START-HERE.md)** •
-**[🗺️ 4-Year Roadmap](roadmap/)** •
-**[💼 Pick a Career Track](tracks/)** •
-**[🏢 Company Tiers](placements/company-tiers.md)** •
-**[⏰ Started Late?](roadmap/late-start.md)**
+[![Website](https://img.shields.io/badge/📖_Read_online-sumitsingh4411.github.io-FF6B3D?style=for-the-badge&labelColor=0B1020)](https://sumitsingh4411.github.io/Placement-Preparation-Roadmap/)
+[![Start here](https://img.shields.io/badge/🚀_Start_here-10_min_orientation-F5B942?style=for-the-badge&labelColor=0B1020)](START-HERE.md)
+
+![Cost](https://img.shields.io/badge/Cost-100%25_Free-16a34a?style=flat-square&labelColor=0B1020)
+![Format](https://img.shields.io/badge/Format-Markdown_+_Web-2563eb?style=flat-square&labelColor=0B1020)
+![Target](https://img.shields.io/badge/Target-Service_→_Product_→_FAANG-7c3aed?style=flat-square&labelColor=0B1020)
+![License](https://img.shields.io/badge/License-MIT-64748b?style=flat-square&labelColor=0B1020)
+
+[![Stars](https://img.shields.io/github/stars/sumitsingh4411/Placement-Preparation-Roadmap?style=flat-square&color=eab308&labelColor=0B1020)](https://github.com/sumitsingh4411/Placement-Preparation-Roadmap/stargazers)
+[![Forks](https://img.shields.io/github/forks/sumitsingh4411/Placement-Preparation-Roadmap?style=flat-square&color=06b6d4&labelColor=0B1020)](https://github.com/sumitsingh4411/Placement-Preparation-Roadmap/network/members)
+[![Last commit](https://img.shields.io/github/last-commit/sumitsingh4411/Placement-Preparation-Roadmap?style=flat-square&color=ec4899&labelColor=0B1020)](https://github.com/sumitsingh4411/Placement-Preparation-Roadmap/commits/main)
+
+<br>
+
+**[🚀 Start Here](START-HERE.md)**  ·  **[🗺️ 4-Year Roadmap](roadmap/)**  ·  **[💼 Career Tracks](tracks/)**  ·  **[🏢 Company Tiers](placements/company-tiers.md)**  ·  **[⏰ Started Late?](roadmap/late-start.md)**
+
+<br>
+
+> ### *Your college brings ~~three companies~~. India has **thousands**.*
+
+<br>
 
 </div>
 

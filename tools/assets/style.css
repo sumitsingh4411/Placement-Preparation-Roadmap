@@ -961,3 +961,56 @@ div[align="center"] p:has(img.badge) { line-height: 2.2; }
 .mermaid-wrap { margin: 1.6em 0; padding: 22px 18px; text-align: center; }
 .mermaid-wrap img { max-width: 100%; height: auto; display: inline-block; }
 @media (max-width: 560px) { .mermaid-wrap { padding: 14px 8px; } }
+
+/* ═══════════════════════════════════ HEADER, REFINED ══ */
+/* The bar was a flat strip with text links. These give it depth and make the
+   current section unmistakable without shouting. */
+.topbar {
+  height: 66px;
+  padding: 0 26px;
+  gap: 18px;
+  background: color-mix(in srgb, var(--ink) 72%, transparent);
+  backdrop-filter: saturate(1.8) blur(18px);
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(90deg,
+    transparent, var(--haze-soft) 15%, var(--haze-soft) 85%, transparent) 1;
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--paper) 4%, transparent) inset;
+}
+.brand-mark {
+  padding: 6px 9px;
+  background: linear-gradient(145deg,
+    color-mix(in srgb, var(--flame) 22%, transparent),
+    color-mix(in srgb, var(--flame) 8%, transparent));
+  border-color: color-mix(in srgb, var(--flame) 42%, transparent);
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--flame) 18%, transparent);
+}
+.brand-text { font-size: 16px; letter-spacing: -.026em; }
+
+/* Nav: a quiet underline for the current section rather than a filled chip. */
+.topnav { gap: 1px; margin-left: 16px; }
+.topnav a {
+  position: relative;
+  padding: 8px 12px;
+  font-size: 14px;
+  letter-spacing: -.008em;
+  border-radius: var(--r-sm);
+}
+.topnav a::after {
+  content: "";
+  position: absolute; left: 12px; right: 12px; bottom: 3px;
+  height: 2px; border-radius: 2px;
+  background: var(--flame);
+  transform: scaleX(0);
+  transition: transform .22s var(--ease);
+}
+.topnav a:hover { background: color-mix(in srgb, var(--paper) 5%, transparent); color: var(--paper); }
+.topnav a.on { background: none; color: var(--paper); font-weight: 600; }
+.topnav a.on::after { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) { .topnav a::after { transition: none; } }
+
+.search-trigger { height: 38px; border-radius: 10px; min-width: 232px; }
+.search-trigger:hover {
+  border-color: color-mix(in srgb, var(--flame) 30%, transparent);
+  background: var(--ink-3);
+}
+.icon-btn { border-radius: 10px; }
