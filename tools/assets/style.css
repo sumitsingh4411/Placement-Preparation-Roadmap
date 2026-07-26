@@ -951,8 +951,8 @@ div[align="center"] p:has(img.badge) { line-height: 2.2; }
 
 @media (max-width: 560px) { .mermaid-wrap { padding: 20px 12px; } }
 
-/* Diagrams are static SVG compiled at build time, so there is no runtime,
-   no font race and no foreignObject to clip a label. They just scale. */
-.mermaid-wrap { padding: 26px 20px; margin: 1.6em 0; overflow-x: auto; }
-.mermaid-wrap svg { display: block; margin: 0 auto; width: 100%; height: auto; max-width: 100%; }
+/* Static SVG compiled at build time - no runtime, no font race, no
+   foreignObject. Centred at its natural size, never stretched past it. */
+.mermaid-wrap { padding: 26px 20px; margin: 1.6em 0; overflow-x: auto; text-align: center; }
+.mermaid-wrap svg { display: inline-block; height: auto; }
 @media (max-width: 560px) { .mermaid-wrap { padding: 16px 10px; } }

@@ -329,8 +329,11 @@ def render_diagram(src):
         os.unlink(tmp)
     svg = open(out, encoding="utf-8").read()
     svg = svg[svg.index("<svg"):]
-    # drop the hard max-width so the diagram scales with its column
-    svg = re.sub(r'style="max-width:[^"]*"', 'style="width:100%;height:auto"', svg, count=1)
+    # Keep mermaid's own max-width: it is the diagram's natural size. Removing
+    # it makes every SVG stretch to the full column and small diagrams blow up
+    # until their nodes overlap. Only add height:auto so it scales in ratio.
+    svg = re.sub(r'style="max-width:\s*([0-9.]+)px;?[^"]*"',
+                 r'style="max-width:\1px;width:100%;height:auto"', svg, count=1)
     return svg
 
 
