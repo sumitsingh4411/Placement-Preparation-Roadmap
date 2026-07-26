@@ -44,7 +44,12 @@ jobs:
                       u = m.group(1)
                       if u.startswith(("http", "//", "data:", "mailto:", "#")):
                           continue
-                      if not os.path.exists(os.path.normpath(os.path.join(dp, u.split("#")[0]))):
+                      # strip the ?v= cache-busting hash and any #fragment
+                      # before resolving to a path on disk
+                      target = u.split("#")[0].split("?")[0]
+                      if not target:
+                          continue
+                      if not os.path.exists(os.path.normpath(os.path.join(dp, target))):
                           bad.append(f"{p} -> {u}")
           if bad:
               print("Broken internal links:")
