@@ -951,8 +951,28 @@ div[align="center"] p:has(img.badge) { line-height: 2.2; }
 
 @media (max-width: 560px) { .mermaid-wrap { padding: 20px 12px; } }
 
-/* Safety net: if mermaid ever mis-measures a label, the diagram must still be
-   readable. SVG clips overflow by default, which is what turns a bad
-   measurement into text cut off mid-word. Let it paint outside instead. */
-.mermaid svg { overflow: visible; }
-.mermaid-wrap { overflow-x: auto; overflow-y: visible; }
+/* Large diagrams overflow rather than shrink, so the container has to be a
+   real scroller on both axes. A mis-measured label still paints outside its
+   box instead of being sliced, but the scrollport is what makes big
+   flowcharts usable. */
+.mermaid-wrap { overflow: auto; overscroll-behavior-x: contain; }
+.mermaid svg { overflow: visible; max-width: none; }
+.mermaid-wrap::-webkit-scrollbar { height: 9px; width: 9px; }
+.mermaid-wrap::-webkit-scrollbar-thumb {
+  background: var(--ink-3); border-radius: 5px;
+}
+.mermaid-wrap::-webkit-scrollbar-thumb:hover { background: var(--haze); }
+
+/* Drop-shadows on every node made large graphs jitter while scrolling and
+   hovering - dozens of filter passes per frame. A flat border reads just as
+   deliberate and costs nothing. */
+.mermaid .node rect,
+.mermaid .node polygon,
+.mermaid .node circle,
+.mermaid .node path { filter: none; }
+
+/* Grab-to-pan, so a wide flowchart can be dragged rather than hunted for
+   with a scrollbar. */
+.mermaid-wrap { cursor: grab; }
+.mermaid-wrap.dragging { cursor: grabbing; }
+.mermaid-wrap.dragging .mermaid { pointer-events: none; }

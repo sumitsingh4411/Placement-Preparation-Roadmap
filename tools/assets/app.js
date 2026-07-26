@@ -255,6 +255,31 @@
     paint(0);
   }
 
+
+  /* ───────────────────────────────────────────── diagram drag-to-pan ── */
+  /* Wide flowcharts are painful to explore with a scrollbar alone. Native
+     scrolling still works; this just adds pointer dragging on top of it. */
+  document.querySelectorAll(".mermaid-wrap").forEach(function (wrap) {
+    var down = false, sx = 0, sy = 0, sl = 0, st = 0;
+    wrap.addEventListener("pointerdown", function (e) {
+      if (e.button !== 0) return;
+      down = true; sx = e.clientX; sy = e.clientY;
+      sl = wrap.scrollLeft; st = wrap.scrollTop;
+      wrap.classList.add("dragging");
+      wrap.setPointerCapture(e.pointerId);
+    });
+    wrap.addEventListener("pointermove", function (e) {
+      if (!down) return;
+      wrap.scrollLeft = sl - (e.clientX - sx);
+      wrap.scrollTop = st - (e.clientY - sy);
+    });
+    ["pointerup", "pointercancel"].forEach(function (ev) {
+      wrap.addEventListener(ev, function () {
+        down = false; wrap.classList.remove("dragging");
+      });
+    });
+  });
+
   /* ─────────────────────────────────────────────────────── mermaid ── */
   if (document.querySelector(".mermaid")) {
     var sources = [];
@@ -267,7 +292,7 @@
       "window.__t3mermaid=m;window.__t3RenderMermaid=function(reset){" +
       "var dark=document.documentElement.dataset.theme!=='light';" +
       "m.initialize({startOnLoad:false,theme:'base',fontFamily:'Instrument Sans,sans-serif'," +
-      "flowchart:{curve:'basis',nodeSpacing:44,rankSpacing:58,padding:14,useMaxWidth:true}," +
+      "flowchart:{curve:'basis',nodeSpacing:44,rankSpacing:58,padding:14,useMaxWidth:false}," +
       "themeVariables:{background:'transparent',primaryColor:dark?'#161F3A':'#E7EDFA'," +
       "primaryTextColor:dark?'#E9EDF8':'#131A2E',primaryBorderColor:dark?'#2A3757':'#C6D2EC'," +
       "lineColor:dark?'#55628A':'#8C9AC0',secondaryColor:dark?'#141C34':'#EAEFFA'," +
@@ -276,13 +301,7 @@
       "var nodes=document.querySelectorAll('.mermaid');" +
       "if(reset){nodes.forEach(function(n,i){n.removeAttribute('data-processed');" +
       "n.textContent=window.__t3src[i];});}" +
-      // Render immediately so the diagram is never blocked on the network,
-      // then render once more when the webfonts settle. Mermaid sizes its
-      // boxes by measuring label text, so a first pass with fallback metrics
-      // can come out too narrow; the second pass corrects it.
-      "m.run({nodes:nodes});};window.__t3RenderMermaid(false);" +
-      "if(document.fonts&&document.fonts.ready){document.fonts.ready" +
-      ".then(function(){window.__t3RenderMermaid(true);});}";
+      "m.run({nodes:nodes});};window.__t3RenderMermaid(false);";
     window.__t3src = sources;
     document.body.appendChild(s);
   }
