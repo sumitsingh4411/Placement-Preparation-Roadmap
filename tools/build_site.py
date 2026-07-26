@@ -336,6 +336,38 @@ def render_diagram(src):
     return (png, w // 3, h // 3)
 
 
+def diagram_alt(src):
+    """Describe a diagram from its own source.
+
+    alt="Diagram" tells a search engine and a screen reader nothing. The node
+    labels are the content, so build the description from them.
+    """
+    labels = re.findall(r'\[\"?(.*?)\"?\]', src)
+    if not labels:
+        labels = re.findall(r'\((.*?)\)', src)
+    clean = []
+    for lab in labels:
+        lab = re.sub(r"<br\s*/?>", " ", lab)
+        lab = re.sub(r"\s+", " ", lab).strip(' "')
+        if lab and lab not in clean:
+            clean.append(lab)
+    if not clean:
+        return "Diagram"
+    # keep the first line of each node: that is the label, the rest is detail.
+    # Long alt text is ignored by screen readers and diluted by search engines.
+    heads = []
+    for lab in clean:
+        head = re.split(r"\s{2,}|·|\u00b7", lab)[0].strip()
+        head = "".join(ch for ch in head
+                       if unicodedata.category(ch)[0] != "S" or ch in "+-/&")
+        head = re.sub(r"\s+", " ", head).strip(" -\u2014")
+        if head:
+            heads.append(head)
+    kind = "Flowchart" if re.match(r"\s*(graph|flowchart)", src) else "Diagram"
+    alt = f"{kind}: " + " \u2192 ".join(heads[:6])
+    return alt[:180].rstrip(" \u2192") 
+
+
 def retheme_mermaid(src):
     """Swap GitHub-theme hexes for palette equivalents, case-insensitively."""
     def sub(m):
@@ -492,12 +524,13 @@ def render(md, page_dir):
             code = "\n".join(body)
             if lang == "mermaid":
                 path, w, h = render_diagram(retheme_mermaid(code))
+                alt = html.escape(diagram_alt(code))
                 html_out.append(
                     '<figure class="mermaid-wrap"><img src="%sassets/diagrams/%s" '
-                    'width="%d" height="%d" alt="Diagram" loading="lazy" '
+                    'width="%d" height="%d" alt="%s" loading="lazy" '
                     'decoding="async"></figure>'
                     % ("../" * (page_dir.count("/") + 1) if page_dir else "",
-                       os.path.basename(path), w, h))
+                       os.path.basename(path), w, h, alt))
             else:
                 html_out.append(
                     '<div class="code-block" data-lang="%s"><button class="copy" '
