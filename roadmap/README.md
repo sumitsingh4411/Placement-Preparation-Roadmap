@@ -16,7 +16,9 @@
 gantt
     title Your 4 years, mapped
     dateFormat YYYY-MM
-    axisFormat Year %y
+    axisFormat %Y
+    tickInterval 1year
+    todayMarker off
 
     section Year 1
     Learn one language          :2024-08, 6M

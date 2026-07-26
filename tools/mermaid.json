@@ -21,7 +21,32 @@
   "tertiaryColor": "#0F1528",
   "edgeLabelBackground": "#0F1528",
   "fontSize": "16px",
-  "fontFamily": "Instrument Sans, Helvetica Neue, sans-serif"
+  "fontFamily": "Instrument Sans, Helvetica Neue, sans-serif",
+  "taskBkgColor": "#243257",
+  "taskBorderColor": "#4C6098",
+  "taskTextColor": "#E9EDF8",
+  "taskTextOutsideColor": "#AAB6D4",
+  "taskTextDarkColor": "#0B1020",
+  "activeTaskBkgColor": "#FF6B3D",
+  "activeTaskBorderColor": "#FF8A63",
+  "doneTaskBkgColor": "#1E2A49",
+  "doneTaskBorderColor": "#3A4A78",
+  "critBkgColor": "#F5B942",
+  "critBorderColor": "#FFCF6E",
+  "sectionBkgColor": "#141C34",
+  "altSectionBkgColor": "#0F1528",
+  "gridColor": "#23304F",
+  "todayLineColor": "#FF6B3D"
  },
- "themeCSS": ".node .label,.node .label text,.nodeLabel{font-weight:500;letter-spacing:-0.011em}.node .label text tspan:first-child,.nodeLabel tspan:first-child{font-weight:700}.node rect,.node polygon,.node path{rx:16;ry:16;stroke-width:1.7px}.edgePath path,.flowchart-link{stroke-width:1.8px;opacity:.75}.cluster rect{rx:20;ry:20;stroke-dasharray:3 5;stroke-width:1.2px}.marker{opacity:.75}"
+ "themeCSS": ".node .label,.node .label text,.nodeLabel{font-weight:500;letter-spacing:-0.011em}.node .label text tspan:first-child,.nodeLabel tspan:first-child{font-weight:700}.node rect,.node polygon,.node path{rx:16;ry:16;stroke-width:1.7px}.edgePath path,.flowchart-link{stroke-width:1.8px;opacity:.75}.cluster rect{rx:20;ry:20;stroke-dasharray:3 5;stroke-width:1.2px}.marker{opacity:.75}",
+ "gantt": {
+  "barHeight": 26,
+  "barGap": 8,
+  "topPadding": 58,
+  "leftPadding": 100,
+  "gridLineStartPadding": 32,
+  "fontSize": 14,
+  "sectionFontSize": 14,
+  "numberSectionStyles": 4
+ }
 }
