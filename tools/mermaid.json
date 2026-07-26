@@ -4,10 +4,11 @@
  "flowchart": {
   "curve": "basis",
   "nodeSpacing": 50,
-  "rankSpacing": 64,
-  "padding": 18,
+  "rankSpacing": 70,
+  "padding": 22,
   "htmlLabels": false,
-  "useMaxWidth": true
+  "useMaxWidth": true,
+  "wrappingWidth": 260
  },
  "htmlLabels": false,
  "themeVariables": {
@@ -19,8 +20,8 @@
   "secondaryColor": "#141C34",
   "tertiaryColor": "#0F1528",
   "edgeLabelBackground": "#0F1528",
-  "fontSize": "15px",
+  "fontSize": "16px",
   "fontFamily": "Instrument Sans, Helvetica Neue, sans-serif"
  },
- "themeCSS": ".node rect,.node polygon,.node path{rx:14;ry:14;stroke-width:1.6px}.node .label text,.nodeLabel{letter-spacing:-0.005em}.edgePath path,.flowchart-link{stroke-width:1.7px;opacity:.8}.cluster rect{rx:18;ry:18;stroke-dasharray:3 5;stroke-width:1.2px}.marker{opacity:.8}"
+ "themeCSS": ".node .label,.node .label text,.nodeLabel{font-weight:500;letter-spacing:-0.011em}.node .label text tspan:first-child,.nodeLabel tspan:first-child{font-weight:700}.node rect,.node polygon,.node path{rx:16;ry:16;stroke-width:1.7px}.edgePath path,.flowchart-link{stroke-width:1.8px;opacity:.75}.cluster rect{rx:20;ry:20;stroke-dasharray:3 5;stroke-width:1.2px}.marker{opacity:.75}"
 }
