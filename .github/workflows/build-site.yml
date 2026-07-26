@@ -34,6 +34,16 @@ jobs:
       - name: Install diagram renderer
         run: npm ci || npm i
 
+      # Diagrams are rendered to images at build time, so the font has to be
+      # present on the runner. Without it a newly added diagram would render
+      # in a fallback face and not match the ones built locally.
+      - name: Install diagram font
+        run: |
+          mkdir -p ~/.fonts
+          cp tools/fonts/*.ttf ~/.fonts/
+          fc-cache -f
+          fc-list | grep -i "instrument sans" || (echo "font not registered" && exit 1)
+
       - name: Build docs/
         run: python3 tools/build_site.py
 
