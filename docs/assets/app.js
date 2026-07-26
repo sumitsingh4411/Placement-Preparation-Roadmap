@@ -321,7 +321,7 @@
           svg.removeAttribute("height");
           svg.style.width = "100%";
           svg.style.height = "100%";
-          panners.push(window.svgPanZoom(svg, {
+          var p = window.svgPanZoom(svg, {
             zoomEnabled: true,
             controlIconsEnabled: true,
             fit: true,
@@ -331,12 +331,29 @@
             contain: false,
             dblClickZoomEnabled: true,
             mouseWheelZoomEnabled: false
-          }));
+          });
+          requestAnimationFrame(function () {
+            p.resize(); p.fit(); p.center();
+          });
+          panners.push(p);
         });
       });
     };
 
+    /* Mermaid sizes each node by measuring its label, so it must not run
+       before the webfont is ready or the viewBox comes out too narrow and
+       pan/zoom then clips to it. Raced against a timeout so a slow font can
+       delay the diagram but never prevent it. */
+    var fontsReady = new Promise(function (res) {
+      setTimeout(res, 2000);
+      if (!document.fonts) return res();
+      document.fonts.load('500 14px "Instrument Sans"')
+        .then(function () { return document.fonts.ready; })
+        .then(res, res);
+    });
+
     Promise.all([load("mermaid.min.js"), load("svg-pan-zoom.min.js")])
+      .then(function () { return fontsReady; })
       .then(draw)
       .catch(function () {
         /* If the bundles ever fail, show the source rather than an empty box. */
