@@ -288,7 +288,14 @@
         startOnLoad: false,
         theme: "base",
         fontFamily: "Instrument Sans, sans-serif",
-        flowchart: { curve: "basis", nodeSpacing: 44, rankSpacing: 58, padding: 14, useMaxWidth: false },
+        /* htmlLabels:false is the fix for labels being sliced at a hard vertical
+           edge. With htmlLabels on, mermaid puts each label in a <foreignObject>
+           sized from measured text - and foreignObject CLIPS anything wider than
+           that box, so any measurement error cuts the label mid-glyph. Native
+           SVG <text> has no clipping behaviour at all. */
+        flowchart: { curve: "basis", nodeSpacing: 44, rankSpacing: 58,
+                     padding: 14, useMaxWidth: false, htmlLabels: false },
+        htmlLabels: false,
         themeVariables: {
           background: "transparent",
           primaryColor: dark ? "#161F3A" : "#E7EDFA",
