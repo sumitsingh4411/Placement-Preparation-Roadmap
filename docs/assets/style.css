@@ -1171,3 +1171,39 @@ div[align="center"] p:has(img.badge) { line-height: 2.2; }
   border-color: color-mix(in srgb, var(--flame) 26%, transparent);
   background: color-mix(in srgb, var(--paper) 70%, transparent);
 }
+
+/* ══════════════════════════ HEADER NAV — restrained ══ */
+/* A flame outline round the track AND round every item meant seven boxes
+   inside a box, all in the same accent. Nothing led. The track is gone, the
+   item borders are neutral, and flame is spent only on the current section
+   so it is the single thing that stands out. */
+.topnav {
+  padding: 0; gap: 6px; margin-left: 20px;
+  background: none; border: none; box-shadow: none; border-radius: 0;
+}
+.topnav a {
+  padding: 8px 14px; border-radius: 10px;
+  border: 1px solid var(--haze-soft);
+  background: color-mix(in srgb, var(--ink-1) 60%, transparent);
+  color: var(--paper-dim);
+  transition: color .18s var(--ease), background .18s var(--ease),
+              border-color .18s var(--ease);
+}
+.topnav a svg { opacity: .6; }
+.topnav a:hover {
+  color: var(--paper);
+  border-color: var(--haze);
+  background: var(--ink-2);
+}
+.topnav a:hover svg { opacity: .9; }
+.topnav a.on {
+  color: #fff; font-weight: 600;
+  background: linear-gradient(135deg, var(--flame), #EF7F35);
+  border-color: transparent;
+  box-shadow: 0 2px 14px color-mix(in srgb, var(--flame) 38%, transparent);
+}
+.topnav a.on svg { opacity: 1; }
+:root[data-theme="light"] .topnav a {
+  border-color: var(--haze); background: color-mix(in srgb, var(--paper) 55%, transparent);
+}
+:root[data-theme="light"] .topnav a.on { border-color: transparent; }
