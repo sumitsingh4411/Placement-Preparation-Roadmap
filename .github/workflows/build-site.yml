@@ -1,0 +1,62 @@
+name: Build site
+
+# The site in docs/ is generated from the markdown files. It's committed to the
+# repo so GitHub Pages can serve it directly, and regenerated here whenever the
+# content or the generator changes — so editing a .md file is all a contributor
+# ever has to do.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "**.md"
+      - "tools/**"
+      - ".github/workflows/build-site.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Build docs/
+        run: python3 tools/build_site.py
+
+      - name: Check internal links
+        run: |
+          python3 - <<'PY'
+          import os, re, sys
+          bad = []
+          for dp, _, fn in os.walk("docs"):
+              for f in fn:
+                  if not f.endswith(".html"):
+                      continue
+                  p = os.path.join(dp, f)
+                  for m in re.finditer(r'(?:href|src)="([^"]+)"', open(p, encoding="utf-8").read()):
+                      u = m.group(1)
+                      if u.startswith(("http", "//", "data:", "mailto:", "#")):
+                          continue
+                      if not os.path.exists(os.path.normpath(os.path.join(dp, u.split("#")[0]))):
+                          bad.append(f"{p} -> {u}")
+          if bad:
+              print("Broken internal links:")
+              print("\n".join(sorted(set(bad))))
+              sys.exit(1)
+          print("All internal links resolve.")
+          PY
+
+      - name: Commit regenerated site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs
+          git diff --staged --quiet || git commit -m "rebuild site from markdown [skip ci]"
+          git push
