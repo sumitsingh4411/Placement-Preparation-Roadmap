@@ -1,10 +1,10 @@
 <div align="center">
 
-# 🎓 Tier-3 to Top Tech
+# 🎓 Placement Preparation Roadmap
 
-### The complete 4-year survival guide for students in tier-3 colleges
+### A complete 4-year guide for B.Tech & engineering students in India — built for tier-3 colleges
 
-**No campus placements? No seniors to guide you? No coding culture? Good. Start here.**
+**Free, year-by-year placement preparation: DSA, career tracks, projects, aptitude, resume and off-campus strategy.** No campus placements? No seniors to guide you? No coding culture? Good. Start here.
 
 <br>
 
@@ -62,6 +62,24 @@ This repo is everything you need, organised the way you will actually use it: **
 | 🧾 Need to build a resume | [placements/resume.md](placements/resume.md) |
 | 📤 Have no campus placements | [placements/off-campus-strategy.md](placements/off-campus-strategy.md) |
 | 💡 Need project ideas | [projects/README.md](projects/README.md) |
+
+---
+
+## 📖 Popular guides
+
+The questions students search for most, answered in full:
+
+<div align="center">
+
+| Guide | For you if you're asking... |
+|---|---|
+| **[How to get placed from a tier-3 college](guides/tier-3-college-placement.md)** | *"Can I get a good job from a tier-3 college?"* |
+| **[B.Tech placement preparation](guides/btech-placement-preparation.md)** | *"How do I prepare for placement in B.Tech?"* |
+| **[Software engineer roadmap (India)](guides/software-engineer-roadmap-india.md)** | *"What's the roadmap to become a software engineer?"* |
+| **[DSA roadmap for placement](guides/dsa-roadmap-for-placement.md)** | *"How many DSA questions are enough?"* |
+| **[Off-campus placement guide](guides/off-campus-placement-guide.md)** | *"How do freshers get off-campus jobs?"* |
+
+</div>
 
 ---
 
