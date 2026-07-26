@@ -666,6 +666,23 @@ def shell(*, page, title, description, body, toc, landing=False):
     og_type = "website" if landing else "article"
     jsonld = structured_data(page, title, description, src_md)
 
+    # Direct links in the header. `match` is the path prefix that lights the link
+    # up, so a reader always knows which part of the site they're standing in.
+    topnav = "".join(
+        '<a href="%s"%s>%s</a>' % (rel(page, target),
+                                   ' class="on"' if (page == target or
+                                                     (match and page.startswith(match))) else "",
+                                   html.escape(label))
+        for target, match, label in (
+            ("START-HERE.html", None, "Start"),
+            ("map.html", None, "Full map"),
+            ("roadmap/index.html", "roadmap/", "Roadmap"),
+            ("tracks/index.html", "tracks/", "Tracks"),
+            ("core/index.html", "core/", "Skills"),
+            ("placements/index.html", "placements/", "Get hired"),
+            ("guides/index.html", "guides/", "Guides"),
+        ))
+
     main = (('<main id="main" class="landing">%s</main>' % body) if landing else
             '<main id="main" class="content"><article class="prose">%s</article>%s%s</main>'
             % (body, edit, pager))
@@ -709,6 +726,7 @@ def shell(*, page, title, description, body, toc, landing=False):
     <span class="brand-mark">T3</span>
     <span class="brand-text">Tier-3 <em>to</em> Top Tech</span>
   </a>
+  <nav class="topnav" aria-label="Main">{topnav}</nav>
   <button class="search-trigger" data-search-open>
     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
     <span>Search</span><kbd>⌘K</kbd>
@@ -825,6 +843,17 @@ def main():
             open(dest, "w", encoding="utf-8").write(out_html)
             built += 1
 
+    # ── the full map: every page in the repo on one screen ──
+    tree_title = "The Complete Roadmap Map — Every Guide in One Place"
+    tree_desc = ("A visual map of the whole placement preparation roadmap: the "
+                 "4-year spine, 8 career tracks, core skills, hiring guides, "
+                 "projects and templates — every page, one screen.")
+    open(os.path.join(OUT, "map.html"), "w", encoding="utf-8").write(
+        shell(page="map.html", title=tree_title, description=tree_desc,
+              body=open(os.path.join(TOOLS, "tree.html"), encoding="utf-8").read(),
+              toc=[], landing=True))
+    built += 1
+
     # ── section index pages for directories linked as `dir/` ──
     for folder, (heading, blurb, nav_group) in SECTIONS.items():
         page = folder + "/index.html"
@@ -857,14 +886,14 @@ def main():
     # ── sitemap.xml ──
     today = datetime.date.today().isoformat()
     pages = sorted({md_to_html_path(s) for _, items in NAV for s, _ in items} |
-                   {f + "/index.html" for f in SECTIONS})
+                   {f + "/index.html" for f in SECTIONS} | {"map.html"})
     urls = []
     for p in pages:
         # Landing page first, guides and roadmaps next: priority reflects how much
         # of the site's value each page carries, not wishful thinking.
         if p == "index.html":
             pri, freq = "1.0", "weekly"
-        elif p.startswith(("guides/", "roadmap/")):
+        elif p == "map.html" or p.startswith(("guides/", "roadmap/")):
             pri, freq = "0.9", "monthly"
         elif p.endswith("index.html"):
             pri, freq = "0.6", "monthly"
