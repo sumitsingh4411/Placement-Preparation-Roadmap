@@ -837,6 +837,10 @@ def main():
 
     for asset in ("style.css", "app.js"):
         shutil.copy(os.path.join(TOOLS, "assets", asset), os.path.join(OUT, "assets", asset))
+    # mermaid + svg-pan-zoom are vendored, not pulled from a CDN, so diagrams
+    # work offline and can't be broken by a third party being slow or blocked.
+    shutil.copytree(os.path.join(TOOLS, "assets", "vendor"),
+                    os.path.join(OUT, "assets", "vendor"), dirs_exist_ok=True)
     open(os.path.join(OUT, ".nojekyll"), "w").close()
 
     index = []

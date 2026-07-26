@@ -13,7 +13,7 @@
       var next = root.dataset.theme === "light" ? "dark" : "light";
       root.dataset.theme = next;
       try { localStorage.setItem("t3-theme", next); } catch (e) {}
-      if (window.__t3RenderMermaid) window.__t3RenderMermaid(true);
+      if (window.__t3RedrawDiagrams) window.__t3RedrawDiagrams();
     });
   }
 
@@ -256,53 +256,92 @@
   }
 
 
-  /* ───────────────────────────────────────────── diagram drag-to-pan ── */
-  /* Wide flowcharts are painful to explore with a scrollbar alone. Native
-     scrolling still works; this just adds pointer dragging on top of it. */
-  document.querySelectorAll(".mermaid-wrap").forEach(function (wrap) {
-    var down = false, sx = 0, sy = 0, sl = 0, st = 0;
-    wrap.addEventListener("pointerdown", function (e) {
-      if (e.button !== 0) return;
-      down = true; sx = e.clientX; sy = e.clientY;
-      sl = wrap.scrollLeft; st = wrap.scrollTop;
-      wrap.classList.add("dragging");
-      wrap.setPointerCapture(e.pointerId);
-    });
-    wrap.addEventListener("pointermove", function (e) {
-      if (!down) return;
-      wrap.scrollLeft = sl - (e.clientX - sx);
-      wrap.scrollTop = st - (e.clientY - sy);
-    });
-    ["pointerup", "pointercancel"].forEach(function (ev) {
-      wrap.addEventListener(ev, function () {
-        down = false; wrap.classList.remove("dragging");
+  /* ────────────────────────────────────────────────── diagrams ── */
+  /* Mermaid and svg-pan-zoom are vendored into assets/vendor rather than
+     pulled from a CDN, so diagrams work offline and cannot be broken by a
+     third party being slow or blocked.
+
+     Every diagram renders into a fixed-height viewport and is then handed to
+     svg-pan-zoom. That is the whole point of using the library: the box owns
+     its own size, so a tall or wide graph can never overflow it, be sliced,
+     or force the page to grow. Panning and zooming replace scrolling. */
+  var wraps = document.querySelectorAll(".mermaid-wrap");
+  if (wraps.length) {
+    var appSrc = document.querySelector('script[src$="app.js"]');
+    var vendor = appSrc ? appSrc.src.replace(/app\.js.*$/, "vendor/") : "vendor/";
+
+    var load = function (file) {
+      return new Promise(function (res, rej) {
+        var el = document.createElement("script");
+        el.src = vendor + file;
+        el.onload = res;
+        el.onerror = rej;
+        document.head.appendChild(el);
       });
-    });
-  });
+    };
 
-  /* ─────────────────────────────────────────────────────── mermaid ── */
-  if (document.querySelector(".mermaid")) {
-    var sources = [];
-    document.querySelectorAll(".mermaid").forEach(function (el) { sources.push(el.textContent); });
+    var theme = function () {
+      var dark = document.documentElement.dataset.theme !== "light";
+      return {
+        startOnLoad: false,
+        theme: "base",
+        fontFamily: "Instrument Sans, sans-serif",
+        flowchart: { curve: "basis", nodeSpacing: 44, rankSpacing: 58, padding: 14, useMaxWidth: false },
+        themeVariables: {
+          background: "transparent",
+          primaryColor: dark ? "#161F3A" : "#E7EDFA",
+          primaryTextColor: dark ? "#E9EDF8" : "#131A2E",
+          primaryBorderColor: dark ? "#2A3757" : "#C6D2EC",
+          lineColor: dark ? "#55628A" : "#8C9AC0",
+          secondaryColor: dark ? "#141C34" : "#EAEFFA",
+          tertiaryColor: dark ? "#0F1528" : "#F2F5FC",
+          edgeLabelBackground: dark ? "#0F1528" : "#F2F5FC",
+          fontSize: "14px"
+        }
+      };
+    };
 
-    var s = document.createElement("script");
-    s.type = "module";
-    s.textContent =
-      "import m from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';" +
-      "window.__t3mermaid=m;window.__t3RenderMermaid=function(reset){" +
-      "var dark=document.documentElement.dataset.theme!=='light';" +
-      "m.initialize({startOnLoad:false,theme:'base',fontFamily:'Instrument Sans,sans-serif'," +
-      "flowchart:{curve:'basis',nodeSpacing:44,rankSpacing:58,padding:14,useMaxWidth:false}," +
-      "themeVariables:{background:'transparent',primaryColor:dark?'#161F3A':'#E7EDFA'," +
-      "primaryTextColor:dark?'#E9EDF8':'#131A2E',primaryBorderColor:dark?'#2A3757':'#C6D2EC'," +
-      "lineColor:dark?'#55628A':'#8C9AC0',secondaryColor:dark?'#141C34':'#EAEFFA'," +
-      "tertiaryColor:dark?'#0F1528':'#F2F5FC',edgeLabelBackground:dark?'#0F1528':'#F2F5FC'," +
-      "fontSize:'14px'}});" +
-      "var nodes=document.querySelectorAll('.mermaid');" +
-      "if(reset){nodes.forEach(function(n,i){n.removeAttribute('data-processed');" +
-      "n.textContent=window.__t3src[i];});}" +
-      "m.run({nodes:nodes});};window.__t3RenderMermaid(false);";
-    window.__t3src = sources;
-    document.body.appendChild(s);
+    var panners = [];
+    var draw = function () {
+      panners.forEach(function (p) { try { p.destroy(); } catch (e) {} });
+      panners = [];
+      var nodes = document.querySelectorAll(".mermaid");
+      nodes.forEach(function (n, i) {
+        n.removeAttribute("data-processed");
+        n.textContent = window.__t3src[i];
+      });
+      window.mermaid.initialize(theme());
+      window.mermaid.run({
+        nodes: nodes,
+        postRenderCallback: function () {
+          document.querySelectorAll(".mermaid svg").forEach(function (svg) {
+            svg.removeAttribute("width");
+            svg.removeAttribute("height");
+            svg.style.width = "100%";
+            svg.style.height = "100%";
+            panners.push(window.svgPanZoom(svg, {
+              zoomEnabled: true,
+              controlIconsEnabled: true,
+              fit: true,
+              center: true,
+              minZoom: 0.4,
+              maxZoom: 12,
+              contain: false,
+              dblClickZoomEnabled: true,
+              mouseWheelZoomEnabled: false /* let the page keep its scroll */
+            }));
+          });
+        }
+      });
+    };
+
+    Promise.all([load("mermaid.min.js"), load("svg-pan-zoom.min.js")])
+      .then(draw)
+      .catch(function () {
+        /* If the bundles ever fail, show the source rather than an empty box. */
+        wraps.forEach(function (w) { w.classList.add("mermaid-failed"); });
+      });
+
+    window.__t3RedrawDiagrams = draw;
   }
 })();
