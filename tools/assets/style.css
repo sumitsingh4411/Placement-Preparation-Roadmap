@@ -951,59 +951,8 @@ div[align="center"] p:has(img.badge) { line-height: 2.2; }
 
 @media (max-width: 560px) { .mermaid-wrap { padding: 20px 12px; } }
 
-/* Diagrams are a fixed-size viewport, not a box that grows with content.
-   svg-pan-zoom owns what happens inside it, so a graph of any size pans and
-   zooms within these bounds instead of overflowing, being clipped, or
-   stretching the page. */
-.mermaid-wrap {
-  height: clamp(340px, 60vh, 620px);
-  padding: 0;
-  overflow: hidden;
-  cursor: grab;
-  position: relative;
-}
-.mermaid-wrap:active { cursor: grabbing; }
-.mermaid { width: 100%; height: 100%; min-height: 0; }
-.mermaid svg { width: 100%; height: 100%; display: block; max-width: none; }
-
-/* svg-pan-zoom's own controls, restyled to match the page. */
-.mermaid svg .svg-pan-zoom-control { transform: translate(0, 6px); }
-.mermaid svg .svg-pan-zoom-control-background { fill: var(--ink-2); opacity: .9; }
-.mermaid svg .svg-pan-zoom-control-element { fill: var(--paper-dim); }
-
-/* Node styling. No filters - dozens of shadow passes per frame made large
-   graphs stutter while panning. */
-.mermaid .node rect,
-.mermaid .node polygon,
-.mermaid .node circle,
-.mermaid .node path { rx: 10px; ry: 10px; stroke-width: 1.5px; filter: none; }
-.mermaid .nodeLabel, .mermaid .label {
-  font-family: var(--f-body) !important; font-weight: 500; letter-spacing: -.006em;
-}
-.mermaid .edgePath path, .mermaid .flowchart-link { stroke-width: 1.6px; opacity: .75; }
-.mermaid .edgeLabel {
-  font-family: var(--f-mono) !important; font-size: 11.5px !important; letter-spacing: .03em;
-}
-.mermaid .cluster rect {
-  rx: 14px; ry: 14px; stroke-dasharray: 3 4; stroke-width: 1px;
-  fill: color-mix(in srgb, var(--ink) 45%, transparent) !important;
-}
-.mermaid .cluster .nodeLabel {
-  font-family: var(--f-mono) !important; font-size: 11px !important;
-  letter-spacing: .12em; text-transform: uppercase; fill: var(--muted) !important;
-}
-
-/* If the vendored bundles ever fail to load, show the diagram source
-   rather than an empty frame. */
-.mermaid-failed { height: auto; overflow: auto; cursor: auto; padding: 18px; }
-.mermaid-failed .mermaid {
-  opacity: 1; white-space: pre; font-family: var(--f-mono);
-  font-size: 12.5px; color: var(--muted); height: auto;
-}
-
-/* With htmlLabels off, labels are native SVG <text>, which takes its font
-   from presentation attributes rather than the .nodeLabel rules above. */
-.mermaid svg text,
-.mermaid .nodeLabel,
-.mermaid .edgeLabel { font-family: var(--f-body) !important; }
-.mermaid svg .node text { font-weight: 500; }
+/* Diagrams are static SVG compiled at build time, so there is no runtime,
+   no font race and no foreignObject to clip a label. They just scale. */
+.mermaid-wrap { padding: 26px 20px; margin: 1.6em 0; overflow-x: auto; }
+.mermaid-wrap svg { display: block; margin: 0 auto; width: 100%; height: auto; max-width: 100%; }
+@media (max-width: 560px) { .mermaid-wrap { padding: 16px 10px; } }

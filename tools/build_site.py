@@ -300,6 +300,40 @@ MERMAID_PALETTE = {
 }
 
 
+MERMAID_CONF = os.path.join(TOOLS, "mermaid.json")
+DIAGRAM_DIR = os.path.join(TOOLS, "assets", "diagrams")
+os.makedirs(DIAGRAM_DIR, exist_ok=True)
+
+
+def render_diagram(src):
+    """Compile a mermaid block to a static SVG at build time.
+
+    Rendering in the browser meant every diagram depended on the webfont
+    arriving, a CDN being reachable, and foreignObject measuring correctly -
+    and any of those failing sliced or blanked the diagram. Compiling here
+    removes all of it: the SVG is a file we can open and check.
+
+    Cached by content hash, so only changed diagrams re-render.
+    """
+    import hashlib, subprocess, tempfile
+    key = hashlib.md5(src.encode()).hexdigest()[:12]
+    out = os.path.join(DIAGRAM_DIR, key + ".svg")
+    if not os.path.exists(out):
+        mmdc = os.path.join(ROOT, "node_modules", ".bin", "mmdc")
+        with tempfile.NamedTemporaryFile("w", suffix=".mmd", delete=False) as fh:
+            fh.write(src)
+            tmp = fh.name
+        subprocess.run([mmdc, "-i", tmp, "-o", out, "-c", MERMAID_CONF,
+                        "-b", "transparent"], check=True,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        os.unlink(tmp)
+    svg = open(out, encoding="utf-8").read()
+    svg = svg[svg.index("<svg"):]
+    # drop the hard max-width so the diagram scales with its column
+    svg = re.sub(r'style="max-width:[^"]*"', 'style="width:100%;height:auto"', svg, count=1)
+    return svg
+
+
 def retheme_mermaid(src):
     """Swap GitHub-theme hexes for palette equivalents, case-insensitively."""
     def sub(m):
@@ -455,8 +489,8 @@ def render(md, page_dir):
             i += 1
             code = "\n".join(body)
             if lang == "mermaid":
-                html_out.append('<div class="mermaid-wrap"><pre class="mermaid">%s</pre></div>'
-                                % html.escape(retheme_mermaid(code)))
+                html_out.append('<figure class="mermaid-wrap">%s</figure>'
+                                % render_diagram(retheme_mermaid(code)))
             else:
                 html_out.append(
                     '<div class="code-block" data-lang="%s"><button class="copy" '
@@ -849,10 +883,6 @@ def main():
 
     for asset in ("style.css", "app.js"):
         shutil.copy(os.path.join(TOOLS, "assets", asset), os.path.join(OUT, "assets", asset))
-    # mermaid + svg-pan-zoom are vendored, not pulled from a CDN, so diagrams
-    # work offline and can't be broken by a third party being slow or blocked.
-    shutil.copytree(os.path.join(TOOLS, "assets", "vendor"),
-                    os.path.join(OUT, "assets", "vendor"), dirs_exist_ok=True)
     open(os.path.join(OUT, ".nojekyll"), "w").close()
 
     index = []
