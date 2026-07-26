@@ -37,6 +37,24 @@ Year-by-year plans · 8 career tracks · DSA · aptitude · resume · off-campus
 
 ---
 
+<div align="center">
+
+### What's inside
+
+</div>
+
+<div align="center">
+
+| | | |
+|:---:|:---:|:---:|
+| **[🗺️ 4-Year Roadmap](roadmap/)**<br><sub>Year 1 → placement, semester by semester</sub> | **[💼 8 Career Tracks](tracks/)**<br><sub>Frontend · Backend · QA · DevOps · Data · more</sub> | **[🧮 DSA](core/dsa.md)**<br><sub>30 patterns · how many problems you need</sub> |
+| **[🏢 Company Tiers](placements/company-tiers.md)**<br><sub>Who hires, what they pay, what they ask</sub> | **[📤 Off-Campus](placements/off-campus-strategy.md)**<br><sub>90% of your offers come from here</sub> | **[🧾 Resume](placements/resume.md)**<br><sub>ATS-safe, one page, with a full example</sub> |
+| **[➗ Aptitude](core/aptitude-and-maths.md)**<br><sub>8-week plan for service-company tests</sub> | **[💡 Projects](projects/)**<br><sub>What actually counts, by track</sub> | **[⏰ Started Late?](roadmap/late-start.md)**<br><sub>4, 8 and 18-month recovery plans</sub> |
+
+</div>
+
+---
+
 ## 📌 Read this first
 
 Nobody is coming to save you.
