@@ -952,17 +952,14 @@ div[align="center"] p:has(img.badge) { line-height: 2.2; }
 
 /* Static SVG compiled at build time.
 
-   Deliberately NOT restyling the text: mmdc measured every label and sized
-   every box during the build, so changing font-family or weight here makes
-   the text stop fitting the box it was laid out for, and nodes overlap.
+   Nothing here restyles the diagram: mmdc measured every label and sized
+   every box during the build, so changing font, weight or size afterwards
+   makes text stop fitting its box and nodes overlap.
 
-   scrollbar-gutter keeps space reserved so the scrollbar cannot appear,
-   narrow the content, become unnecessary, disappear, and loop - which reads
-   as fast flickering on hover. */
-.mermaid-wrap {
-  padding: 26px 20px; margin: 1.6em 0;
-  overflow-x: auto; scrollbar-gutter: stable;
-  text-align: center;
-}
-.mermaid-wrap svg { display: inline-block; height: auto; max-width: 100%; }
+   No overflow either. The SVG is capped at 100% so it always fits, which
+   means no scrollbar can appear - and no scrollbar means it cannot appear,
+   narrow the content, become unnecessary and disappear in a loop, which is
+   what read as fast flickering on hover. */
+.mermaid-wrap { padding: 26px 20px; margin: 1.6em 0; text-align: center; }
+.mermaid-wrap svg { display: inline-block; max-width: 100%; height: auto; }
 @media (max-width: 560px) { .mermaid-wrap { padding: 16px 10px; } }

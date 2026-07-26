@@ -1,2 +1,25 @@
-{"theme":"base","fontFamily":"Instrument Sans, sans-serif","flowchart":{"curve":"basis","nodeSpacing":44,"rankSpacing":58,"padding":14,"htmlLabels":false,"useMaxWidth":true},"htmlLabels":false,
-"themeVariables":{"background":"transparent","primaryColor":"#161F3A","primaryTextColor":"#E9EDF8","primaryBorderColor":"#2A3757","lineColor":"#55628A","secondaryColor":"#141C34","tertiaryColor":"#0F1528","edgeLabelBackground":"#0F1528","fontSize":"14px"}}
+{
+ "theme": "base",
+ "fontFamily": "Arial, Helvetica, sans-serif",
+ "flowchart": {
+  "curve": "basis",
+  "nodeSpacing": 44,
+  "rankSpacing": 58,
+  "padding": 14,
+  "htmlLabels": false,
+  "useMaxWidth": true
+ },
+ "htmlLabels": false,
+ "themeVariables": {
+  "background": "transparent",
+  "primaryColor": "#161F3A",
+  "primaryTextColor": "#E9EDF8",
+  "primaryBorderColor": "#2A3757",
+  "lineColor": "#55628A",
+  "secondaryColor": "#141C34",
+  "tertiaryColor": "#0F1528",
+  "edgeLabelBackground": "#0F1528",
+  "fontSize": "14px",
+  "fontFamily": "Arial, Helvetica, sans-serif"
+ }
+}
