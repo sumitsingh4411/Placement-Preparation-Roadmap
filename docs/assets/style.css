@@ -1014,3 +1014,25 @@ div[align="center"] p:has(img.badge) { line-height: 2.2; }
   background: var(--ink-3);
 }
 .icon-btn { border-radius: 10px; }
+
+/* Brand mark: three ascending bars, the climb this repo is about. Replaces
+   the "T3" text tile, which read as a placeholder rather than a mark. */
+.brand-mark {
+  display: grid; place-items: center;
+  width: 34px; height: 34px; padding: 0;
+  border-radius: 10px;
+  background: linear-gradient(150deg, var(--ink-2), var(--ink));
+  border: 1px solid color-mix(in srgb, var(--flame) 30%, transparent);
+  box-shadow:
+    0 2px 12px color-mix(in srgb, var(--flame) 16%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--paper) 4%, transparent) inset;
+  transition: box-shadow .25s var(--ease), border-color .25s var(--ease);
+}
+.brand-mark svg { width: 19px; height: 19px; display: block; }
+.brand:hover .brand-mark {
+  border-color: color-mix(in srgb, var(--flame) 55%, transparent);
+  box-shadow:
+    0 3px 18px color-mix(in srgb, var(--flame) 28%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--paper) 6%, transparent) inset;
+}
+@media (prefers-reduced-motion: reduce) { .brand-mark { transition: none; } }

@@ -836,7 +836,7 @@ def shell(*, page, title, description, body, toc, landing=False):
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
   </button>
   <a class="brand" href="{depth}">
-    <span class="brand-mark">T3</span>
+    <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 28 28" fill="none"><defs><linearGradient id="bm" x1="0" y1="28" x2="28" y2="0"><stop offset="0" stop-color="var(--flame)"/><stop offset="1" stop-color="var(--gold)"/></linearGradient></defs><rect x="4" y="17" width="5" height="7" rx="2.5" fill="url(#bm)" opacity=".45"/><rect x="11.5" y="11" width="5" height="13" rx="2.5" fill="url(#bm)" opacity=".72"/><rect x="19" y="4" width="5" height="20" rx="2.5" fill="url(#bm)"/></svg></span>
     <span class="brand-text">Tier-3 <em>to</em> Top Tech</span>
   </a>
   <nav class="topnav" aria-label="Main">{topnav}</nav>
