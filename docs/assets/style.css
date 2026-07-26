@@ -951,28 +951,39 @@ div[align="center"] p:has(img.badge) { line-height: 2.2; }
 
 @media (max-width: 560px) { .mermaid-wrap { padding: 20px 12px; } }
 
-/* Large diagrams overflow rather than shrink, so the container has to be a
-   real scroller on both axes. A mis-measured label still paints outside its
-   box instead of being sliced, but the scrollport is what makes big
-   flowcharts usable. */
-.mermaid-wrap { overflow: auto; overscroll-behavior-x: contain; }
-.mermaid svg { overflow: visible; max-width: none; }
-.mermaid-wrap::-webkit-scrollbar { height: 9px; width: 9px; }
-.mermaid-wrap::-webkit-scrollbar-thumb {
-  background: var(--ink-3); border-radius: 5px;
+/* A vertical flowchart is tall and narrow; a horizontal one is wide and
+   short. Neither should ever be trapped in a fixed-height box, so the
+   container never constrains height - it grows with the diagram and only
+   scrolls sideways when the graph is genuinely wider than the column.
+
+   overflow:visible on the SVG is deliberately NOT used here: it lets content
+   paint outside the box the container sized itself to, which is what was
+   slicing the last node off the bottom. */
+.mermaid-wrap {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-height: none;
+  overscroll-behavior-x: contain;
 }
+.mermaid { min-height: 0; }
+.mermaid svg {
+  overflow: visible;
+  max-width: none;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.mermaid-wrap::-webkit-scrollbar { height: 9px; }
+.mermaid-wrap::-webkit-scrollbar-thumb { background: var(--ink-3); border-radius: 5px; }
 .mermaid-wrap::-webkit-scrollbar-thumb:hover { background: var(--haze); }
 
-/* Drop-shadows on every node made large graphs jitter while scrolling and
-   hovering - dozens of filter passes per frame. A flat border reads just as
-   deliberate and costs nothing. */
+/* Drop-shadows on every node made large graphs jitter while scrolling -
+   dozens of filter passes per frame. A flat border reads the same. */
 .mermaid .node rect,
 .mermaid .node polygon,
 .mermaid .node circle,
 .mermaid .node path { filter: none; }
 
-/* Grab-to-pan, so a wide flowchart can be dragged rather than hunted for
-   with a scrollbar. */
 .mermaid-wrap { cursor: grab; }
 .mermaid-wrap.dragging { cursor: grabbing; }
 .mermaid-wrap.dragging .mermaid { pointer-events: none; }

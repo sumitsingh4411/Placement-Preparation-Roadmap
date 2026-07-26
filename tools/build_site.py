@@ -526,8 +526,11 @@ def render(md, page_dir):
             # Skip h3s in the centered page header (the tagline) — they sit before
             # the first h2 and would otherwise dominate the table of contents.
             if level == 2 or (level == 3 and any(t["level"] == 2 for t in toc)):
+                # rendered is already HTML-escaped; strip tags then unescape
+                # so entities like &amp; don't show up literally in the TOC.
                 toc.append({"level": level, "id": sid,
-                            "text": re.sub(r"<[^>]+>", "", rendered).strip()})
+                            "text": html.unescape(
+                                re.sub(r"<[^>]+>", "", rendered)).strip()})
             anchor = ('<a class="hanchor" href="#%s" aria-label="Link to this section">#</a>' % sid
                       if level > 1 else "")
             html_out.append('<h%d id="%s">%s%s</h%d>' % (level, sid, rendered, anchor, level))
