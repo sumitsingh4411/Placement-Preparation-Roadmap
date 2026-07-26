@@ -267,8 +267,10 @@
      or force the page to grow. Panning and zooming replace scrolling. */
   var wraps = document.querySelectorAll(".mermaid-wrap");
   if (wraps.length) {
-    var appSrc = document.querySelector('script[src$="app.js"]');
-    var vendor = appSrc ? appSrc.src.replace(/app\.js.*$/, "vendor/") : "vendor/";
+    /* Match on *= not $=: the src carries a ?v= cache-busting hash, so it
+       does not end in "app.js". Getting this wrong 404s the bundles. */
+    var appSrc = document.querySelector('script[src*="app.js"]');
+    var vendor = appSrc ? appSrc.src.replace(/app\.js.*$/, "vendor/") : "assets/vendor/";
 
     var load = function (file) {
       return new Promise(function (res, rej) {
