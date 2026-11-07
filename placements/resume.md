@@ -267,6 +267,7 @@ ACHIEVEMENTS
 |---|---|
 | **[Overleaf + Jake's Resume](https://www.overleaf.com/latex/templates/jakes-resume/syzfjbzwjncs)** ⭐ | LaTeX, ATS-safe, the standard in tech. **Best choice** |
 | **[FlowCV](https://flowcv.com/)** ⭐ | Free, ATS-friendly, no watermark |
+| [ResumeInvited](https://resumeinvited.com/) | Free browser-based editor with live preview and PDF export. No signup required. |
 | **[Resumake](https://resumake.io/)** | Free, simple, open source |
 | **Google Docs** | Use a plain single-column template. Export as PDF |
 | ❌ Canva | Beautiful and ATS-hostile. Avoid for tech applications |
